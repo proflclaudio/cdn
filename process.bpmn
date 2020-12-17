@@ -6,43 +6,43 @@
         <camunda:property />
       </camunda:properties>
     </bpmn:extensionElements>
-    <bpmn:startEvent id="StartEvent_1" name="inicial" camunda:asyncBefore="true">
+    <bpmn:startEvent id="StartEvent" name="inicial" camunda:asyncBefore="true">
       <bpmn:outgoing>SequenceFlow_1fp17al</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_1fp17al" sourceRef="StartEvent_1" targetRef="task1" />
-    <bpmn:endEvent id="EndEvent_0x6ir2l">
+    <bpmn:sequenceFlow id="SequenceFlow_1fp17al" sourceRef="StartEvent" targetRef="task1" />
+    <bpmn:endEvent id="EndEvent">
       <bpmn:incoming>Flow_1q90h6y</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_16gzt2m" sourceRef="task1" targetRef="Activity_09p0p47" />
-    <bpmn:sequenceFlow id="Flow_1r485z5" sourceRef="Activity_09p0p47" targetRef="Gateway_1nhw056" />
-    <bpmn:sequenceFlow id="Flow_0t56xok" sourceRef="Gateway_1nhw056" targetRef="task3">
+    <bpmn:sequenceFlow id="SequenceFlow_16gzt2m" sourceRef="task1" targetRef="task2" />
+    <bpmn:sequenceFlow id="Flow_1r485z5" sourceRef="task2" targetRef="gtw1" />
+    <bpmn:sequenceFlow id="Flow_0t56xok" sourceRef="gtw1" targetRef="task3">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">"resposta ok"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:exclusiveGateway id="Gateway_1nhw056" camunda:asyncAfter="true" camunda:exclusive="false">
+    <bpmn:exclusiveGateway id="gtw1" camunda:asyncAfter="true" camunda:exclusive="false">
       <bpmn:incoming>Flow_1r485z5</bpmn:incoming>
       <bpmn:outgoing>Flow_0t56xok</bpmn:outgoing>
       <bpmn:outgoing>Flow_0d6ejqm</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_0d6ejqm" sourceRef="Gateway_1nhw056" targetRef="task4">
+    <bpmn:sequenceFlow id="Flow_0d6ejqm" sourceRef="gtw1" targetRef="task4">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">"resposta não encontrada"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_00sf7bf" sourceRef="task4" targetRef="task1" />
-    <bpmn:sequenceFlow id="Flow_0z38uoq" sourceRef="task3" targetRef="Gateway_0m3hjb9" />
-    <bpmn:parallelGateway id="Gateway_0m3hjb9">
+    <bpmn:sequenceFlow id="Flow_0z38uoq" sourceRef="task3" targetRef="gtw2" />
+    <bpmn:parallelGateway id="gtw2">
       <bpmn:incoming>Flow_0z38uoq</bpmn:incoming>
       <bpmn:outgoing>Flow_0iykb8m</bpmn:outgoing>
       <bpmn:outgoing>Flow_0drzi9j</bpmn:outgoing>
     </bpmn:parallelGateway>
-    <bpmn:sequenceFlow id="Flow_0iykb8m" sourceRef="Gateway_0m3hjb9" targetRef="task6" />
-    <bpmn:sequenceFlow id="Flow_0drzi9j" sourceRef="Gateway_0m3hjb9" targetRef="task5" />
-    <bpmn:sequenceFlow id="Flow_108hsev" sourceRef="task6" targetRef="Gateway_01b0oh5" />
-    <bpmn:parallelGateway id="Gateway_01b0oh5">
+    <bpmn:sequenceFlow id="Flow_0iykb8m" sourceRef="gtw2" targetRef="task6" />
+    <bpmn:sequenceFlow id="Flow_0drzi9j" sourceRef="gtw2" targetRef="task5" />
+    <bpmn:sequenceFlow id="Flow_108hsev" sourceRef="task6" targetRef="gtw3" />
+    <bpmn:parallelGateway id="gtw3">
       <bpmn:incoming>Flow_108hsev</bpmn:incoming>
       <bpmn:incoming>Flow_1ne76py</bpmn:incoming>
       <bpmn:outgoing>Flow_1q90h6y</bpmn:outgoing>
     </bpmn:parallelGateway>
-    <bpmn:sequenceFlow id="Flow_1ne76py" sourceRef="task5" targetRef="Gateway_01b0oh5" />
-    <bpmn:sequenceFlow id="Flow_1q90h6y" sourceRef="Gateway_01b0oh5" targetRef="EndEvent_0x6ir2l" />
+    <bpmn:sequenceFlow id="Flow_1ne76py" sourceRef="task5" targetRef="gtw3" />
+    <bpmn:sequenceFlow id="Flow_1q90h6y" sourceRef="gtw3" targetRef="EndEvent" />
     <bpmn:sequenceFlow id="Flow_0u7ghq3" sourceRef="task6" targetRef="Event_1l3fjoc" />
     <bpmn:intermediateCatchEvent id="Event_1l3fjoc" name="Refazer contato">
       <bpmn:incoming>Flow_0u7ghq3</bpmn:incoming>
@@ -50,7 +50,7 @@
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">30</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
-    <bpmn:userTask id="Activity_09p0p47" name="Consultar Resposta na Base de Dados" camunda:formKey="http://localhost/chat/index.php">
+    <bpmn:userTask id="task2" name="Consultar Resposta na Base de Dados" camunda:formKey="http://localhost/chat/index.php">
       <bpmn:incoming>SequenceFlow_16gzt2m</bpmn:incoming>
       <bpmn:outgoing>Flow_1r485z5</bpmn:outgoing>
     </bpmn:userTask>
@@ -136,25 +136,25 @@
         <di:waypoint x="215" y="247" />
         <di:waypoint x="240" y="247" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1" bioc:stroke="#000" bioc:fill="#fff">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent" bioc:stroke="#000" bioc:fill="#fff">
         <dc:Bounds x="179" y="229" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="183" y="272" width="29" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_0x6ir2l_di" bpmnElement="EndEvent_0x6ir2l">
+      <bpmndi:BPMNShape id="EndEvent_0x6ir2l_di" bpmnElement="EndEvent">
         <dc:Bounds x="1052" y="229" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1l47wz0_di" bpmnElement="Gateway_1nhw056" isMarkerVisible="true">
+      <bpmndi:BPMNShape id="Gateway_1l47wz0_di" bpmnElement="gtw1" isMarkerVisible="true">
         <dc:Bounds x="495" y="222" width="50" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="576" y="299" width="50" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_01kltyy_di" bpmnElement="Gateway_0m3hjb9">
+      <bpmndi:BPMNShape id="Gateway_01kltyy_di" bpmnElement="gtw2">
         <dc:Bounds x="715" y="222" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0w1o621_di" bpmnElement="Gateway_01b0oh5">
+      <bpmndi:BPMNShape id="Gateway_0w1o621_di" bpmnElement="gtw3">
         <dc:Bounds x="965" y="222" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0r3vpvg_di" bpmnElement="Event_1l3fjoc" bioc:stroke="#000" bioc:fill="#fff">
@@ -163,7 +163,7 @@
           <dc:Bounds x="952" y="145" width="78" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_19lq4ws_di" bpmnElement="Activity_09p0p47">
+      <bpmndi:BPMNShape id="Activity_19lq4ws_di" bpmnElement="task2">
         <dc:Bounds x="370" y="207" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1omn9vp_di" bpmnElement="task6">
